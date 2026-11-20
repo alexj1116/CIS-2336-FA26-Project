@@ -7,7 +7,13 @@
 
 async function renderRooms() {
   const container = document.getElementById("room-list");
-  const rooms = await getRooms();
+  let rooms;
+  try {
+    rooms = await getRooms();
+  } catch (error) {
+    container.textContent = `Could not load rooms: ${error.message}`;
+    return;
+  }
 
   if (!rooms || rooms.length === 0) {
     container.innerHTML = "<p>No rooms available.</p>";
